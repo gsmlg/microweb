@@ -21,7 +21,7 @@ app.use(connect.static(path.join(__dirname, 'client')));
 app.use(config.route(connect));
 var jade = require('jade'),
     fs = require('fs'),
-    viewPath = path.join(__dirname, 'view/');
+    viewPath = path.join(__dirname, 'server/view/');
 
 app.use(function(req, res, next) {
   if (req.url === '/404'){

@@ -1,4 +1,4 @@
-var controller = require('../controller');
+var controller = require('../server/controller');
 
 module.exports = function(connect) {
   return Route;
