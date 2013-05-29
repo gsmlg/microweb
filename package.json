@@ -1,0 +1,16 @@
+{
+  "name": "microsite",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "connect": "~2.7.10",
+    "connect-mongo": "~0.3.2",
+    "jade": "~0.30.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  }
+}

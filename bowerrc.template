@@ -1,0 +1,33 @@
+Bower can be configured using JSON in a .bowerrc file.
+
+Global configuration is handled by creating a .bowerrc in your home directory (i.e., ~/.bowerrc). Local configuration is handled by creating a .bowerrc in your project's directory, allowing you to version a project-specific Bower configuration with the rest of your code base.
+
+Bower will combine the local and global configurations (with local settings taking precedence).
+
+The .bowerrc defines several options:
+
+    directory: Set the default directory to install packaged components into.
+    endpoint: Set a custom registry endpoint.
+    json: Set the default JSON file for Bower to use when resolving dependencies.
+    searchpath: An array of additional URLs pointing to read-only Bower registries.
+    shorthand_resolver: Define a custom template for shorthand package names.
+
+{
+  "directory": "bower_components",
+  "endpoint": "https://bower.mycompany.com",
+  "json": "bower.json",
+  "searchpath": [
+    "https://bower.herokuapp.com"
+  ],
+  "shorthand_resolver": "git://example.com/{{{ organization }}}/{{{ package }}}.git"
+}
+
+The searchpath array is useful if your organization wishes to maintain a private registry of packages while also taking advantage of public Bower registries. If a package is not found at your private endpoint, Bower will consult the registries specified in the searchpath array.
+
+The shorthand_resolver key provides support for defining a custom template which Bower uses when constructing a URL for a given shorthand. For example, if a shorthand of twitter/flight or twitter/flight#v1.0.0 is specified in the package manifest, the following data can be referenced from within the .bowerrc as part of the shorthand_resolver template:
+
+    endpoint: twitter/flight
+    organization: twitter
+    package: flight
+
+N.B. To run your own Bower Endpoint for custom packages that are behind a firewall, you can use a simple implementation of the Bower Server.
