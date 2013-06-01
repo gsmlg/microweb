@@ -1,0 +1,380 @@
+!!! 5
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Carousel Template · Bootstrap
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    // Le styles
+    link(href='/vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
+    link(href='/vendor/bootstrap/css/bootstrap-responsive.css', rel='stylesheet')
+    style
+      /* GLOBAL STYLES
+      -------------------------------------------------- */
+      /* Padding below the footer and lighter body text */
+      body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+      }
+      /* CUSTOMIZE THE NAVBAR
+      -------------------------------------------------- */
+      /* Special class on .container surrounding .navbar, used for positioning it into place. */
+      .navbar-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      margin-top: 20px;
+      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+      }
+      .navbar-wrapper .navbar {
+      }
+      /* Remove border and change up box shadow for more contrast */
+      .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      }
+      /* Downsize the brand/project name a bit */
+      .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+      }
+      /* Navbar links: increase padding for taller navbar */
+      .navbar .nav > li > a {
+      padding: 15px 20px;
+      }
+      /* Offset the responsive button for proper vertical alignment */
+      .navbar .btn-navbar {
+      margin-top: 10px;
+      }
+      /* CUSTOMIZE THE CAROUSEL
+      -------------------------------------------------- */
+      /* Carousel base class */
+      .carousel {
+      margin-bottom: 60px;
+      }
+      .carousel .container {
+      position: relative;
+      z-index: 9;
+      }
+      .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+      }
+      .carousel .item {
+      height: 500px;
+      }
+      .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 500px;
+      }
+      .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      padding: 0 20px;
+      margin-top: 200px;
+      }
+      .carousel-caption h1,
+      .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      }
+      .carousel-caption .btn {
+      margin-top: 10px;
+      }
+      /* MARKETING CONTENT
+      -------------------------------------------------- */
+      /* Center align the text within the three columns below the carousel */
+      .marketing .span4 {
+      text-align: center;
+      }
+      .marketing h2 {
+      font-weight: normal;
+      }
+      .marketing .span4 p {
+      margin-left: 10px;
+      margin-right: 10px;
+      }
+      /* Featurettes
+      ------------------------- */
+      .featurette-divider {
+      margin: 80px 0; /* Space out the Bootstrap <hr> more */
+      }
+      .featurette {
+      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      overflow: hidden; /* Vertically center images part 2: clear their floats. */
+      }
+      .featurette-image {
+      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+      }
+      /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+      .featurette-image.pull-left {
+      margin-right: 40px;
+      }
+      .featurette-image.pull-right {
+      margin-left: 40px;
+      }
+      /* Thin out the marketing headings */
+      .featurette-heading {
+      font-size: 50px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -1px;
+      }
+      /* RESPONSIVE CSS
+      -------------------------------------------------- */
+      @media (max-width: 979px) {
+      .container.navbar-wrapper {
+      margin-bottom: 0;
+      width: auto;
+      }
+      .navbar-inner {
+      border-radius: 0;
+      margin: -20px 0;
+      }
+      .carousel .item {
+      height: 500px;
+      }
+      .carousel img {
+      width: auto;
+      height: 500px;
+      }
+      .featurette {
+      height: auto;
+      padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+      display: block;
+      float: none;
+      max-width: 40%;
+      margin: 0 auto 20px;
+      }
+      }
+      @media (max-width: 767px) {
+      .navbar-inner {
+      margin: -20px;
+      }
+      .carousel {
+      margin-left: -20px;
+      margin-right: -20px;
+      }
+      .carousel .container {
+      }
+      .carousel .item {
+      height: 300px;
+      }
+      .carousel img {
+      height: 300px;
+      }
+      .carousel-caption {
+      width: 65%;
+      padding: 0 70px;
+      margin-top: 100px;
+      }
+      .carousel-caption h1 {
+      font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+      font-size: 18px;
+      }
+      .marketing .span4 + .span4 {
+      margin-top: 40px;
+      }
+      .featurette-heading {
+      font-size: 30px;
+      }
+      .featurette .lead {
+      font-size: 18px;
+      line-height: 1.5;
+      }
+      }
+    // HTML5 shim, for IE6-8 support of HTML5 elements
+    //if lt IE 9
+      script(src='/vendor/h5bp/js/html5shiv.js')
+    // Fav and touch icons
+    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/vendor/ico/apple-touch-icon-144-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/vendor/ico/apple-touch-icon-114-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/vendor/ico/apple-touch-icon-72-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', href='/vendor/ico/apple-touch-icon-57-precomposed.png')
+    link(rel='shortcut icon', href='/vendor/ico/favicon.png')
+  body
+    //
+       NAVBAR
+          | ================================================== 
+    .navbar-wrapper
+      // Wrap the .navbar in .container to center it within the absolutely positioned parent.
+      .container
+        .navbar.navbar-inverse
+          .navbar-inner
+            // Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize.
+            button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.brand(href='#') Project name
+            // Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse.
+            .nav-collapse.collapse
+              ul.nav
+                li.active
+                  a(href='#') Home
+                li
+                  a(href='#about') About
+                li
+                  a(href='#contact') Contact
+                // Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns
+                li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown')
+                    | Dropdown
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='#') Action
+                    li
+                      a(href='#') Another action
+                    li
+                      a(href='#') Something else here
+                    li.divider
+                    li.nav-header Nav header
+                    li
+                      a(href='#') Separated link
+                    li
+                      a(href='#') One more separated link
+            // /.nav-collapse
+          // /.navbar-inner
+        // /.navbar
+      // /.container
+    // /.navbar-wrapper
+    //
+       Carousel
+          | ================================================== 
+    #myCarousel.carousel.slide
+      .carousel-inner
+        .item.active
+          img(src='/app/examples/slide-01.jpg', alt='')
+          .container
+            .carousel-caption
+              h1 Example headline.
+              p.lead
+                | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              a.btn.btn-large.btn-primary(href='#') Sign up today
+        .item
+          img(src='/app/examples/slide-02.jpg', alt='')
+          .container
+            .carousel-caption
+              h1 Another example headline.
+              p.lead
+                | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              a.btn.btn-large.btn-primary(href='#') Learn more
+        .item
+          img(src='/app/examples/slide-03.jpg', alt='')
+          .container
+            .carousel-caption
+              h1 One more for good measure.
+              p.lead
+                | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              a.btn.btn-large.btn-primary(href='#') Browse gallery
+      a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+      a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+    // /.carousel
+    //
+       Marketing messaging and featurettes
+          | ================================================== 
+    // Wrap the rest of the page in another container to center all the content.
+    .container.marketing
+      // Three columns of text below the carousel
+      .row
+        .span4
+          img.img-circle(data-src='holder.js/140x140')
+          h2 Heading
+          p
+            | Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          p
+            a.btn(href='#') View details »
+        // /.span4
+        .span4
+          img.img-circle(data-src='holder.js/140x140')
+          h2 Heading
+          p
+            | Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          p
+            a.btn(href='#') View details »
+        // /.span4
+        .span4
+          img.img-circle(data-src='holder.js/140x140')
+          h2 Heading
+          p
+            | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          p
+            a.btn(href='#') View details »
+        // /.span4
+      // /.row
+      // START THE FEATURETTES
+      hr.featurette-divider
+      .featurette
+        img.featurette-image.pull-right(src='/app/examples/browser-icon-chrome.png')
+        h2.featurette-heading
+          | First featurette headling.
+          span.muted It'll blow your mind.
+        p.lead
+          | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      hr.featurette-divider
+      .featurette
+        img.featurette-image.pull-left(src='/app/examples/browser-icon-firefox.png')
+        h2.featurette-heading
+          | Oh yeah, it's that good.
+          span.muted See for yourself.
+        p.lead
+          | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      hr.featurette-divider
+      .featurette
+        img.featurette-image.pull-right(src='/app/examples/browser-icon-safari.png')
+        h2.featurette-heading
+          | And lastly, this one.
+          span.muted Checkmate.
+        p.lead
+          | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      hr.featurette-divider
+      // /END THE FEATURETTES
+      // FOOTER
+      footer
+        p.pull-right
+          a(href='#') Back to top
+        p
+          | © 2013 Company, Inc. ·
+          a(href='#') Privacy
+          | ·
+          a(href='#') Terms
+    // /.container
+    //
+       Le javascript
+          | ================================================== 
+    // Placed at the end of the document so the pages load faster
+    script(src='/vendor/jquery/jquery.js')
+    script(src='/vendor/bootstrap/js/bootstrap.js')
+    script
+      !function ($) {
+      $(function(){
+      // carousel demo
+      $('#myCarousel').carousel()
+      })
+      }(window.jQuery)
+    script(src='/vendor/holder/holder.js')

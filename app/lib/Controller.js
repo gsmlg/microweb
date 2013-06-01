@@ -1,38 +1,57 @@
-var Controller = module.exports = Class.extend({
-	constructor: function(req, res, next){
-		this.auth.apply(this, arguments);
+var Class = require('./Class'),
+    emitter = require('events').EventEmitter,
+    Controller = Class.extend( emitter.prototype, emitter );
+module.exports = Controller.extend({
+  constructor: function(req, res, next){
+    this.req = req;
+    this.res = res;
+    this.next = next;
+    this.on('start',this.start);
+    this.on('end',this.end);
+    this.on('auth',this.auth);
+    this.on('render', this.render);
+    this.on('error', this.error);
+    this.on('init', this.initialize);
+    this.initialize.apply(this, arguments);
+  },
+  start: function(){
+    this.emit('auth');
+  },
+  auth: function() {
+    this.emit('rendern');
+  },
+  initialize: function(){
+  },
+  render: function(){
+    this.emit('end');
+  },
+  error: function() {
+    this.next();
+  },
+  end: function() {
+    return this.res.end();
+  }
 
-		this.initialize.apply(this, arguments);
-
-		this.end.apply(this, arguments);
-
-	},
-	auth: function(req, res, next) {
-		return true;
-	},
-	initialize: function(){},
-	end: function(req, res, next) {
-
-	}
-	
 }, {
 
-	test: function(url){
-		this._createRegFromUrl();
-		return this.urlRegExp.test(url);
-	},
+  test: function(uri){
+    this._createRegExpFromUrl();
+    return this.uriRegExp.test(uri);
+  },
 
-	url: '/',
 
-	_createRegExpFromUrl: function(){
-		var url = this.prototype.url || this.url ;
-		if ( '[object RegExp]' === Object.prototype.call(url) ) {
-			return this.urlRegExp = url;
-		} else if (typeof url === 'string') {
+  _createRegExpFromUrl: function(){
+    var uri = this.prototype.uri || this.uri || /^\/?$/;
+    if ( '[object RegExp]' === Object.prototype.toString.call(uri) ) {
+      return this.uriRegExp = uri;
+    } else if (typeof uri === 'string') {
 
-		} else {
-			return {test:function(){return false;}};
-		}
-	}
-	
+    } else {
+      return {test:function(){return false;}};
+    }
+  }
+
 });
+
+
+

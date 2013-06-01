@@ -1,16 +1,19 @@
-var Class = Object.create(null);
+var Class = function(){};
 
 Class.extend = function(protoProps, staticProps){
   var parent = this,
       child;
 
   // 子类的构造函数可自定，否则就借用父类的构造函数
-  if (protoProps && ('constructor' in protoProps)) {
-    chile = protoProps.constructor;
+  if (protoProps && (Object.prototype.hasOwnProperty.call(protoProps,'constructor'))) {
+    child = protoProps.constructor;
   } else {
-    child = function() { return parent.apply(this, arguments); };
+    child = function() {
+        return parent.apply(this, arguments);
+    };
   }
 
+  var staticProps = staticProps || {};
   // 添加静态方法
   extend(child, parent, staticProps);
 
@@ -39,3 +42,4 @@ function each(arr, callback) {
   }
 };
 
+module.exports = Class;

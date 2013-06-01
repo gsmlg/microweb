@@ -17,14 +17,13 @@ Control.map = (function(dir){
   return controllers;
 })(__dirname);
 
-Control.find = function(url) {
+Control.find = function(uri) {
   var map = Control.map;
-  for ( i in map ) {
-    if (map[i].test(url)) {
-      return map[i];
-    }
-  };
-  return NotFound;
+  return map.filter(function(ctrl){
+	if (ctrl.test(uri))
+	  	return true;
+  	return false;
+  })[0];
 };
 
 function NotFound(req, res, next) {

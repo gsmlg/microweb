@@ -1,33 +1,16 @@
-
-var User = {} ;// require('../model/index').get('user');
-
-var Controller = function(req, res, next) {
-  if (!('user' in req.session)) {
-    req.session.user = new User();
+var Controller = require('../../lib/Controller');
+var User = {} ;
+var view = require('../view');
+var indexController = Controller.extend({
+  uri: /^\/?$/,
+  start: function(){
+    this.emit('render');
+  },
+  render: function(){
+    this.res.write(view.use('page')({title:'Welcome to My Page'}));
+    this.emit('end');
   }
+});
 
-  this.request = req;
-  this.response = res;
-  this.next = next;
+module.exports = indexController;
 
-  // 权限验证
-  this.auth();
-
-  // 初始话
-  this.initialize();
-
-  this.end();
-
-};
-
-
-Controller.test = function(url) {
-	var tester = /^\/?$/;
-	if (tester.test(url))
-		return true;
-	else
-		return false;
-
-};
-
-module.exports = Controller;
