@@ -20,16 +20,34 @@ View.use = function(tpl) {
 var tpl = [];
 var jadeFiles = (function(dir){
   var dirs = fs.readdirSync(dir);
+  var func = arguments.callee;
   dirs.forEach(function(name){
     if( (new RegExp(subfix.replace('.','\\.')+'$')).test(name) ) {
-      var pathName = (dir.replace(new RegExp('^' + dir),'')) + name.replace(new RegExp('\\'+subfix+'$'), '');
-      tpl.push( {name: pathName, template: jade.compile( fs.readFileSync(path.join(dir,name),{encoding:'utf8'}), {filename:path.join(dir,name)} )});
+      var pathName = (dir.replace(new RegExp('^' + __dirname ),'')) + '/' + name.replace(new RegExp('\\'+subfix+'$'), '');
+      tpl.push({
+        name: pathName.slice(1),
+        template: jade.compile( 
+			fs.readFileSync(
+				path.join(dir,name),
+				{encoding:'utf8'}
+			), {
+				filename:path.join(dir,name),
+				debug: false,
+				compileDebug:false,
+				pretty:true
+			} 
+		)
+      });
     } else if (fs.statSync(path.join(dir,name)).isDirectory()) {
-      arguments.callee(path.join(dir, name));
+      func(path.join(dir, name));
     }
   });
 })(__dirname);
 
 View.tpl = tpl;
+
+tpl.forEach(function(obj){
+  console.log(obj.name);
+});
 
 module.exports = View;

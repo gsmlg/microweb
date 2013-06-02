@@ -1,0 +1,214 @@
+extends layout
+
+
+block append jsFiles
+    script(type='text/javascript').
+        jQuery(function($){
+            $('.modal form input').tooltip({placement:'right',
+            trigger:'focus'});
+            function alertMsg(msg,obj) {
+                $('<div class="alert"><a class="close" data-dismiss="alert">×</a><strong>提示: </strong><span>'+msg+'</span></div>').appendTo(obj);
+            }
+            $('#loginModal .btn-primary').on('click', function(e){
+                if (onposting) return;
+                var onposting = onposting || true;
+                var t = setTimeout(function(){ onposting = false }, 5000);
+                var form = $('#loginModal form'),
+                    url = form.attr('action'),
+                    data = form.serialize(),
+                    flag = [];
+                $.each(form.serializeArray(),function(key,data){
+                    if (data.name == 'user[email]'){
+                        var tmp = (/^[^\s@]+@[A-Za-z0-9-\.]+\.[A-Za-z]{2,5}$/.test(data.value)) && data.value.length < 120;
+                        if (tmp) {
+                            flag.push({name:'user[email]',validate:false});
+                        } else {
+                            flag.push({name:'user[email]',validate:true});
+                        }
+                    }
+                    if (data.name == 'user[passwd]'){
+                        var tmp = /^\S{8,30}$/.test(data.value);
+                        if (tmp) {
+                            flag.push({name:'user[passwd]',invalid:false});
+                        } else {
+                            flag.push({name:'user[passwd]',invalid:true});
+                        }
+                    }
+                })
+                if (flag.filter(function(obj){
+                    if (obj.invalid) {
+                        form.find('[name="'+obj.name+'"]').tooltip('show');
+                        return true;
+                    }
+                    return false;
+                }).length) { return false;}
+                $.post(url, data, function(data) {
+                if (data.status === 0) {
+                    alertMsg(data.message, form.find('.message'));
+                    console.log(data.message);
+                } else {
+                    alertMsg(data.message, form.find('.message'));
+                    window.User = data.user;
+                    setTimeout(function(){
+                        $('#loginModa').modal('hide');
+                    }, 3000);
+                    console.log(data.message);
+                }
+                clearTimeout(t);
+                onposting = false;
+                },'json');
+            });
+            $('#registModal .btn-primary').on('click', function(e){
+                if (onposting) return;
+                var onposting = onposting || true;
+                var t = setTimeout(function(){ onposting = false }, 5000);
+                var form = $('#registModal form'),
+                    url = form.attr('action'),
+                    data = form.serialize(),
+                    flag = [];
+                $.each(form.serializeArray(),function(key,data){
+                    if (data.name == 'user[email]'){
+                        var tmp = /^[^\s@]+@[A-Za-z0-9-\.]+\.[A-Za-z]{2,5}$/.test(data.value) && (data.value.length < 120);
+                        if (tmp) {
+                            flag.push({name:'user[email]',validate:false});
+                        } else {
+                            flag.push({name:'user[email]',validate:true});
+                        }
+                    }
+                    if (data.name == 'user[passwd]'){
+                        var tmp = /^\S{8,30}$/.test(data.value);
+                        if (tmp) {
+                            flag.push({name:'user[passwd]',invalid:false});
+                        } else {
+                            flag.push({name:'user[passwd]',invalid:true});
+                        }
+                    }
+                    if (data.name == 'user[name]'){
+                        var tmp = /^[^0-9]/.test(data.value) && /^[\u4e00-\u9fa5]{2,10}$|^\w{6,20}$/.test(data.value);
+                        if (tmp) {
+                            flag.push({name:'user[name]',invalid:false});
+                        } else {
+                            flag.push({name:'user[name]',invalid:true});
+                        }
+                    }
+                })
+                if (flag.filter(function(obj){
+                    if (obj.invalid) {
+                        form.find('[name="'+obj.name+'"]').tooltip('show')
+                        return true;
+                    }
+                    return false;
+                }).length) { return false;}
+                $.post(url, data, function(data) {
+                if (data.status === 0) {
+                    alertMsg(data.message, form.find('.message'));
+                } else if(data.status===1){
+                    alertMsg(data.message, form.find('.message'));
+                    setTimeout(function(){
+                        $('#registModa').modal('hide');
+                        $('#loginModa').modal('show');
+                    }, 3000);
+                }
+                clearTimeout(t);
+                onposting = false;
+                },'json');
+            });
+        });
+block append cssFiles
+    style(type='text/css').
+        body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        }
+        .sidebar-nav {
+        padding: 9px 0;
+        }
+        @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+        float: none;
+        padding-left: 5px;
+        padding-right: 5px;
+        }
+        }
+block contents
+    include component/headbar
+    .container-fluid
+      .row-fluid
+        .span9
+          .hero-unit
+            h1 Hello, world!
+            p
+              | This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+            p
+              a.btn.btn-primary.btn-large(href='#') Learn more »
+          .row-fluid
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+          // /row
+          .row-fluid
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+            .span4
+              h2 Heading
+              p
+                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+              p
+                a.btn(href='#') View details »
+            // /span
+          // /row
+        // /span
+        .span3
+          .well.sidebar-nav
+            ul.nav.nav-list
+              li.nav-header MVC 系统
+              li.active
+                a(href='#') 控制器
+              li
+                a(href='#') 视图
+              li.nav-header 路由/配置
+              li
+                a(href='#') 路由系统
+              li
+                a(href='#') 配置信息
+              li.nav-header 核心方法
+              li
+                a(href='#') session
+              li
+                a(href='#') class
+              li
+                a(href='#') event
+          // /.well
+        // /span
+      // /row

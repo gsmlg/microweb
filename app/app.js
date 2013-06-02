@@ -18,6 +18,15 @@ app.use(config.session(connect));
 
 app.use(connect.static(path.join(__dirname, 'client')));
 
+app.use(function(req,res,next){
+  res.redirect = function(url){
+    res.statusCode = 302;
+    res.setHeader('location',url);
+    res.end();
+  };
+  next();
+});
+
 app.use(config.route(connect));
 var jade = require('jade'),
     fs = require('fs'),

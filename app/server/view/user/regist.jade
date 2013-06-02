@@ -1,0 +1,19 @@
+extends ../layout
+
+block append content
+    form(action='/user/regist',method='post')
+        table
+            caption 用户注册
+            tbody
+                tr
+                    td username:
+                    td 
+                        input(name='user[name]',type="text")
+                tr
+                    td password:
+                    td
+                        input(name='user[pass]',type="password")
+                tr
+                    td
+                    td
+                        input(type="submit",value="注册")

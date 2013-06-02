@@ -7,22 +7,28 @@ module.exports = Controller.extend({
     this.res = res;
     this.next = next;
     this.on('start',this.start);
+    this.on('get', this.get);
+    this.on('post', this.post);
+    this.on('delete', this.delete);
+    this.on('put', this.put);
     this.on('end',this.end);
     this.on('auth',this.auth);
     this.on('render', this.render);
     this.on('error', this.error);
     this.on('init', this.initialize);
+    this.on('json', this.json);
     this.initialize.apply(this, arguments);
   },
   start: function(){
     this.emit('auth');
   },
   auth: function() {
-    this.emit('rendern');
+    this.emit('render');
   },
   initialize: function(){
   },
-  render: function(){
+  render: function(template, data){
+    this.res.write(template(data));
     this.emit('end');
   },
   error: function() {
@@ -30,8 +36,24 @@ module.exports = Controller.extend({
   },
   end: function() {
     return this.res.end();
+  },
+  get: function(){
+    return this.res.redirect('/404');
+  },
+  put: function(){
+    return this.res.redirect('/404');
+  },
+  delete: function(){
+    return this.res.redirect('/404');
+  },
+  post: function(){
+    return this.res.redirect('/404');
+  },
+  json: function(data, code){
+	  this.res.statusCode = (typeof code === 'number') ? code : 200;
+	  this.res.setHeader('Content-Type','application/json');
+	  this.res.end(JSON.stringify(data));
   }
-
 }, {
 
   test: function(uri){

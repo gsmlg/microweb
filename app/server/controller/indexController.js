@@ -4,11 +4,8 @@ var view = require('../view');
 var indexController = Controller.extend({
   uri: /^\/?$/,
   start: function(){
-    this.emit('render');
-  },
-  render: function(){
-    this.res.write(view.use('page')({title:'Welcome to My Page'}));
-    this.emit('end');
+	user = this.req.session.user;
+    this.emit('render',view.use('project'), {title: 'a mvc web',user: user});
   }
 });
 

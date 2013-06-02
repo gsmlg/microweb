@@ -1,0 +1,79 @@
+.navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#') Micro Web
+          .nav-collapse.collapse
+            if user
+                p.navbar-form.pull-right
+                    a.btn.btn-inverse(href='/user') #{user.name}
+            else
+                p.navbar-form.pull-right
+                    a.btn.btn-inverse(href='#loginModal',data-toggle='modal',role='button') 登录
+            ul.nav
+              li.active
+                a(href='/') 首页
+              li
+                a(href='/blog') 博客
+              li
+                a(href='/contact') 讨论
+              li
+                a(href='https://github.com/smglg/microweb',target='_blank') View on Github
+          // /.nav-collapse
+
+// Modal
+#loginModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h3#myModalLabel.text-center 登&#12288;录
+    form.modal-body.form-horizontal(action='/user/login',method='post')
+        .control-group.text-center
+            | 没有账号？
+            a.btn.btn-inverse(data-dismiss='modal', aria-hidden='true',href='#registModal',data-toggle='modal',role='button') 注册
+            | &nbsp;或使用&nbsp;
+            .btn weibo登录
+            .btn QQ登录
+        .control-group
+            label.control-label(for='inputEmail') Email
+            .controls
+                input#inputEmail(name='user[email]',type='email',placeholder='Email',title='正确的电子邮件地址: 用户名@域名')
+        .control-group
+            label.control-label(for='inputPassword') Password
+            .controls
+                input#inputPassword(name='user[passwd]',type='password',placeholder='Password',title='密码长度至少要８位！')
+        .control-group
+            .controls
+                label.checkbox
+                    input(type='checkbox',name='user[remeber]')
+                    记住密码
+        .control-group.message
+    .modal-footer
+        button.btn(data-dismiss='modal', aria-hidden='true') 取消
+        button.btn.btn-primary 登录
+
+// Modal
+#registModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+        h3#myModalLabel.text-center 注&#12288;册
+    form.modal-body.form-horizontal(action='/user/regist',method='post')
+        .control-group
+            label.control-label(for='inputName') 用户名
+            .controls
+                input#inputName(name='user[name]',type='text',placeholder='用户名',title='用户名不能以数字开头，可以是2-10个汉字或6-20个字母、数字或下划线')
+        .control-group
+            label.control-label(for='inputEmail') Email
+            .controls
+                input#inputEmail(name='user[email]',type='email',placeholder='Email',title='正确的电子邮件地址: 用户名@域名')
+        .control-group
+            label.control-label(for='inputPassword') Password
+            .controls
+                input#inputPassword(name='user[passwd]',type='password',placeholder='Password',title='密码长度至少要８位！')
+        .control-group.message
+    .modal-footer
+        .hide.alert
+        button.btn(data-dismiss='modal', aria-hidden='true') 取消
+        button.btn.btn-primary 注册

@@ -4,16 +4,16 @@ var Control = Object.create(null),
 
 Control.map = (function(dir){
   var controllers = [],
-      regular = /\w+Controller\.js$/,
-      files = fs.readdirSync(dir);
-  for( var i in files) {
-    if (regular.test(files[i])) {
-      controllers.push(require(path.join(dir,files[i])));
-    } else if (fs.statSync(path.join(dir,files[i])).isDirectory()) {
-      // recursive directory to get all controllers
-      controller = controller.concat( arguments.callee(path.join(dir,files[i])) );
+      regexp = /^[a-zA-Z0-9_]+Controller\.js$/,
+      files = fs.readdirSync(dir),
+      func = arguments.callee;
+  files.forEach(function(name){
+    if (regexp.test(name)) {
+      controllers.push(require(path.join(dir,name)));
+    } else if (fs.statSync(path.join(dir,name)).isDirectory()) {
+      controllers = controllers.concat(func(path.join(dir,name)));
     }
-  }
+  });
   return controllers;
 })(__dirname);
 

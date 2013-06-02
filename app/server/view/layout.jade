@@ -11,13 +11,22 @@ html.no-js
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    - var title = title || 'Micro Web'
     title #{title}
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width')
     // Place favicon.ico and apple-touch-icon.png in the root directory
+    // Fav and touch icons
+    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/vendor/ico/apple-touch-icon-144x144-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/vendor/ico/apple-touch-icon-114x114-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/vendor/ico/apple-touch-icon-72x72-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', href='/vendor/ico/apple-touch-icon-57x57-precomposed.png')
+    link(rel='shortcut icon', href='/vendor/ico/favicon.ico')
     block cssFiles
         link(rel='stylesheet', href='/vendor/h5bp/css/normalize.css')
         link(rel='stylesheet', href='/vendor/h5bp/css/main.css')
+        link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap-responsive.css')
     script(src='/vendor/h5bp/js/modernizr-2.6.2.min.js')
   body
     //if lt IE 7
@@ -30,17 +39,9 @@ html.no-js
         a(href='http://www.google.com/chromeframe/?redirect=true') activate Google Chrome Frame
         | to improve your experience.
     // Add your site or application content here
-    block content
-
+    block contents
+    include component/footer
     block jsFiles
-        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
-        script
-          window.jQuery || document.write('<script src="/vendor/jquery/jquery.min.js"><\\/script>')
+        script(src='/vendor/jquery/jquery.min.js')
         script(src='/vendor/h5bp/js/plugins.js')
-        script(src='/vendor/h5bp/js/main.js')
-    // Google Analytics: change UA-XXXXX-X to be your site's ID.
-    script
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src='//www.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
+        script(src='/vendor/bootstrap/js/bootstrap.js')
