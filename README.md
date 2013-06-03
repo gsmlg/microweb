@@ -8,3 +8,17 @@ use express web framework
 craete a website
 
 a lite home page for personal web
+
+
+install
+========
+
+$ git clone https://github.com/smglg/microweb.git
+$ cd microweb
+$ npm install
+$ node server.js
+
+TODOS
+========
+
+- create a todo demo
