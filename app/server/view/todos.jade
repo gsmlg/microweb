@@ -1,0 +1,35 @@
+extends layout
+
+block append contents
+
+    include component/headbar
+
+    #onDoing.container-fluid
+        .row-fluid
+            .span9.hero-unit
+                h1 正在做：
+                div 当前进度
+                    .progress.progress-striped.active
+                        .bar(style='width:'+30+'%')
+                p 
+                    |content
+            .span3.well
+                .row-fluid.control-group
+                    .span6.text-center
+                        button.btn
+                            i.icon-trash
+                            | trash
+                    .span6.text-center
+                        button.btn
+                            i.icon-trash
+                            | trash
+
+                .row-fluid.control-group
+                    .span6.text-center
+                        button.btn
+                            i.icon-trash
+                            | trash
+                    .span6.text-center
+                        button.btn
+                            i.icon-trash
+                            | trash

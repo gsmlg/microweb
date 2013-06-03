@@ -5,7 +5,7 @@ var indexController = Controller.extend({
   uri: /^\/?$/,
   start: function(){
 	user = this.req.session.user;
-    this.emit('render',view.use('project'), {title: 'a mvc web',user: user});
+    this.emit('render',view.use('project'), {title: 'a mvc web', user: user, activeBar: 'home'});
   }
 });
 
