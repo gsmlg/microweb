@@ -14,9 +14,15 @@ install
 ========
 
 $ git clone https://github.com/smglg/microweb.git
+
 $ cd microweb
+
 $ npm install
+
+- run
+
 $ node server.js
+
 
 TODOS
 ========
