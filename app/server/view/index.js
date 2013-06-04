@@ -23,10 +23,10 @@ var jadeFiles = (function(dir){
   var func = arguments.callee;
   dirs.forEach(function(name){
     if( (new RegExp(subfix.replace('.','\\.')+'$')).test(name) ) {
-      var pathName = (dir.replace(new RegExp('^' + __dirname ),'')) + '/' + name.replace(new RegExp('\\'+subfix+'$'), '');
+      var pathName = dir + '/' + name.replace(new RegExp('\\'+subfix+'$'), '');
       tpl.push({
-        name: pathName.slice(1),
-        template: jade.compile( 
+        name: pathName.slice(1+__dirname.length),
+        template: jade.compile(
 			fs.readFileSync(
 				path.join(dir,name),
 				{encoding:'utf8'}
@@ -35,7 +35,7 @@ var jadeFiles = (function(dir){
 				debug: false,
 				compileDebug:false,
 				pretty:true
-			} 
+			}
 		)
       });
     } else if (fs.statSync(path.join(dir,name)).isDirectory()) {
