@@ -1,35 +1,71 @@
 extends layout
 
+block append jsFiles
+  script(src='/app/todos/todos.js')
+
 block append contents
 
     include component/headbar
 
     #onDoing.container-fluid
         .row-fluid
-            .span9.hero-unit
+            .span9
+              .hero-unit
                 h1 正在做：
-                div 当前进度
+                div 当前进度： 30%
                     .progress.progress-striped.active
                         .bar(style='width:'+30+'%')
-                p 
+                p
                     |content
-            .span3.well
+                .control-group
+                  .span2
+                    button.btn
+                      i.icon-ok
+                      | 标记完成
+                  .span1
+                    button.btn
+                      .icon-plus
+                  .span1
+                    button.btn
+                      .icon-minus
+                  .span2
+                    button.btn
+                      .icon-remove
+                      | 回收
+              #todos-list.row-fluid
+                .span4
+                  h2 todo
+                  p detail
+                  p
+                    a.btn
+                       i.icon-wrench
+                       | see more
+                .span4
+                .span4
+            .span3
+              .well
                 .row-fluid.control-group
                     .span6.text-center
-                        button.btn
-                            i.icon-trash
-                            | trash
-                    .span6.text-center
-                        button.btn
-                            i.icon-trash
-                            | trash
+                        button.btn#home
+                            i.icon-home
+                            | 主页
 
                 .row-fluid.control-group
                     .span6.text-center
-                        button.btn
-                            i.icon-trash
-                            | trash
+                        button.btn#tasks
+                            i.icon-tasks
+                            | 任务
                     .span6.text-center
-                        button.btn
+                        button.btn#finished
+                            i.icon-briefcase
+                            | 完成
+                .row-fluid.control-group
+                    .span6.text-center
+                        button.btn#add
+                            i.icon-plus
+                            | 添加
+                    .span6.text-center
+                        button.btn#trash
                             i.icon-trash
-                            | trash
+                            | 回收
+
