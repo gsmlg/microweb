@@ -12,11 +12,11 @@ block append contents
             .span9
               .hero-unit
                 h1 正在做：
+                p
+                    |content
                 div 当前进度： 30%
                     .progress.progress-striped.active
                         .bar(style='width:'+30+'%')
-                p
-                    |content
                 .control-group
                   .span2
                     button.btn
@@ -28,18 +28,27 @@ block append contents
                   .span1
                     button.btn
                       .icon-minus
-                  .span2
+                  .span2.pull-right
                     button.btn
                       .icon-remove
                       | 回收
+                  .span2
+                    button.btn
+                      .icon-wrench
+                      | 调整内容
               #todos-list.row-fluid
                 .span4
                   h2 todo
                   p detail
+                  .progress
+                    .bar(style='width:15%')
                   p
                     a.btn
-                       i.icon-wrench
-                       | see more
+                      i.icon-wrench
+                    a.btn
+                      i.icon-ok
+                    a.btn
+                      i.icon-remove
                 .span4
                 .span4
             .span3

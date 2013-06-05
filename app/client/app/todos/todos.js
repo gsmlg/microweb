@@ -7,18 +7,16 @@ jQuery(function($){
     }
   }),
       TaskView = Backbone.View.extend({
-        el:'div',
+        tagName:'div',
         attributes: {'class':'span4'},
         template: function(data){
           var s = '';
-          s += '<div class="span4">';
-          s += '<h2>title</h2>';
+          s += '<h2>' + (typeof data.title === 'string' ? data.title : 'title') + '</h2>';
           s += '<p>javasccript</p>';
-          s += '</div>';
           return s;
         },
         render: function(){
-          this.$el.html(this.template(this.model.attributes));
+          this.$el.append(this.template(this.model.attributes));
           return this;
         },
         initialize: function(opt){
@@ -40,10 +38,10 @@ jQuery(function($){
         },
         minus: function(){
         }
-      });
-
-  var Tasks = Backbone.Collection.extend({
-        model: Task
+      }),
+      Tasks = Backbone.Collection.extend({
+        model: Task,
+        url: '/todos/api'
       }),
       TodoApp = Backbone.View.extend({
         initialize: function(opt){
@@ -51,8 +49,10 @@ jQuery(function($){
           this.views = [];
           this.listenTo(this.collection,'add', this.addOne);
           this.listenTo(this.collection, 'remove', this.removeOne);
+          this.render();
         },
-        id: '#todos-list',
+        tagName: 'div',
+        attributes: {'class':'row-fluit'},
         addOne: function(model){
           var el = (new TaskView({model:model})).render().el;
           this.$el.append(el);
@@ -62,10 +62,15 @@ jQuery(function($){
           this.collection.each(function(model){
             self.addOne(model);
           });
+        },
+        render: function(){
+          this.$el.empty();
+          this.addAll();
         }
       });
-  var todos = new Tasks;
-  var app = new TodoApp({collection: todos});
-
+  window.todos = new Tasks;
+  window.app = new TodoApp({collection: todos});
+  $('.span9').append(app.el);
+  todos.fetch();
 
 });
