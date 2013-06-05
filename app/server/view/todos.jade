@@ -1,6 +1,7 @@
 extends layout
 
 block append jsFiles
+  script(src='/app/user/login.js')
   script(src='/app/todos/todos.js')
 
 block append contents
@@ -36,45 +37,52 @@ block append contents
                     button.btn
                       .icon-wrench
                       | 调整内容
-              #todos-list.row-fluid
-                .span4
-                  h2 todo
-                  p detail
-                  .progress
-                    .bar(style='width:15%')
-                  p
-                    a.btn
-                      i.icon-wrench
-                    a.btn
-                      i.icon-ok
-                    a.btn
-                      i.icon-remove
-                .span4
-                .span4
             .span3
-              .well
+              #dashboard.well
                 .row-fluid.control-group
                     .span6.text-center
                         button.btn#home
                             i.icon-home
                             | 主页
-
                 .row-fluid.control-group
                     .span6.text-center
                         button.btn#tasks
                             i.icon-tasks
                             | 任务
                     .span6.text-center
-                        button.btn#finished
+                        button.btn#done
                             i.icon-briefcase
                             | 完成
                 .row-fluid.control-group
                     .span6.text-center
-                        button.btn#add
+                        a#add.btn
                             i.icon-plus
                             | 添加
+                            //-(href='#taskModal',data-toggle='modal',role='button')
                     .span6.text-center
                         button.btn#trash
                             i.icon-trash
                             | 回收
+
+              #taskModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                  h3#myModalLabel.text-center 任&#12288;务
+                form.modal-body.form-horizontal(action='/user/login',method='post')
+                  .control-group
+                    label.control-label(for='inputEmail') 名称：
+                    .controls
+                      input(name='task[title]',type='text',placeholder='任务名称',title='')
+                  .control-group
+                    label.control-label(for='inputPassword') 详情：
+                    .controls
+                      textarea(name='task[detail]',rows=3,placeholder='填写任务详情',title='')
+                  .control-group
+                    .controls
+                      label.checkbox
+                        input(type='checkbox',name='user[remeber]')
+                  .control-group.message
+                .modal-footer
+                  button.btn(data-dismiss='modal', aria-hidden='true') 取消
+                  button.btn.btn-primary 增加
 

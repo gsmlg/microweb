@@ -32,7 +32,7 @@ var todosController = Controller.extend({
     }
   },
   get: function(){
-    var todos = [{title:'Controller'},{title:'Model'},{title:'View'}];
+    var todos = [{title:'Controller',processed:'60'},{title:'Model',processed:'80'},{title:'View',processed:'70'}];
     this.emit('json',todos);
   }
 });

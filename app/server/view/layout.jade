@@ -26,7 +26,6 @@ html.no-js
         link(rel='stylesheet', href='/vendor/h5bp/css/normalize.css')
         link(rel='stylesheet', href='/vendor/h5bp/css/main.css')
         link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
-    link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap-responsive.css')
     script(src='/vendor/h5bp/js/modernizr-2.6.2.min.js')
   body
     //if lt IE 7
@@ -41,6 +40,7 @@ html.no-js
     // Add your site or application content here
     block contents
     include component/footer
+    link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap-responsive.css')
     block jsFiles
         script(src='/vendor/jquery/jquery.min.js')
         script(src='/vendor/h5bp/js/plugins.js')
