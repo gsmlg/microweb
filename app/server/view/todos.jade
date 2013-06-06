@@ -72,15 +72,14 @@ block append contents
                   .control-group
                     label.control-label(for='inputEmail') 名称：
                     .controls
-                      input(name='task[title]',type='text',placeholder='任务名称',title='')
+                      input(name='title',type='text',placeholder='任务名称',title='')
                   .control-group
                     label.control-label(for='inputPassword') 详情：
                     .controls
-                      textarea(name='task[detail]',rows=3,placeholder='填写任务详情',title='')
+                      textarea(name='detail',rows=3,placeholder='填写任务详情',title='')
                   .control-group
                     .controls
                       label.checkbox
-                        input(type='checkbox',name='user[remeber]')
                   .control-group.message
                 .modal-footer
                   button.btn(data-dismiss='modal', aria-hidden='true') 取消

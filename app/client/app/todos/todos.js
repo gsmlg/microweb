@@ -1,8 +1,26 @@
+/**
+ * todo 客户端
+ * @author gaoshiming@live.com
+ * @github github.com/smglg/microweb
+ * @date Thu Jun 6 2013
+ */
 jQuery(function($){
   var Task = Backbone.Model.extend({
+    idAttribute: '_id',
     url: '/todos/api',
     defaults: {
       processed: 0
+    },
+    parse: function(data){
+      'status' in data || (data.status = null);
+      if (data.status === 0){
+        this.trigger('error');
+        return null;
+      } else if (data.status === 1) {
+        this.trigger('done');
+        return data.todo;
+      }
+      return data;
     }
   }),
       TaskView = Backbone.View.extend({
@@ -57,6 +75,13 @@ jQuery(function($){
         el: $('#taskModal')[0],
         initialize: function(attr){
           this.model = new Task;
+          this.collection = attr.collection;
+          this.listenTo(this.model, 'change', this.render);
+          this.listenTo(this.model, 'done', this.done);
+        },
+        done: function(){
+          this.collection.fetch();
+          this.$el.modal('hide');
         },
         setModel: function(model){
           this.model.set(model);
@@ -68,11 +93,28 @@ jQuery(function($){
             attrs[obj.name] = obj.value;
           });
           return attrs;
+        },
+        events: {
+          'click .btn-primary': 'doSync'
+        },
+        doSync: function(){
+          this.model.save(this.serialize(), {wait:true});
         }
       }),
       Tasks = Backbone.Collection.extend({
         model: Task,
-        url: '/todos/api'
+        url: '/todos/api',
+        parse: function(data){
+          if(data.status===1){
+            return data.todo;
+          } else {
+            this.error(data.message.type);
+            return null;
+          }
+        },
+        error: function(data){
+          console.log(data);
+        }
       }),
       TodoApp = Backbone.View.extend({
         initialize: function(opt){
@@ -103,7 +145,7 @@ jQuery(function($){
   window.app = new TodoApp({collection: todos});
   $('.span9').append(app.el);
   todos.fetch();
-  window.taskSetting = new TaskSettingView;
+  window.taskSetting = new TaskSettingView({collection: todos});
   window.dashboard = new DashboardView({taskView: taskSetting, app: app});
 });
 

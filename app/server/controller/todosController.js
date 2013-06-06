@@ -1,5 +1,5 @@
 var Controller = require('../../lib/Controller');
-var User = {} ;
+var Todos = require('../model/todos.js');
 var view = require('../view');
 var todosController = Controller.extend({
   uri: /^\/todos(\/api.*)?$/,
@@ -32,8 +32,35 @@ var todosController = Controller.extend({
     }
   },
   get: function(){
-    var todos = [{title:'Controller',processed:'60'},{title:'Model',processed:'80'},{title:'View',processed:'70'}];
-    this.emit('json',todos);
+    var todos = [{title:'Controller',processed:'35'},{title:'Model',processed:'80'},{title:'View',processed:'73'}];
+    var todo = new Todos();
+    var self = this;
+    Todos.find(function(err,list){
+      if(err)
+        return self.emit('json',{status: 0, message: err.errors});
+      if (todo)
+        return self.emit('json', {status: 1, message: 'done', todo: list});
+      return self.emit('json', {status: 0, message: 'unknown'});
+    });
+  },
+  post: function(){
+    var todo = this.req.body;
+    var self = this;console.log(this.req.body);
+    Todos.create(todo, function(err, _todo){
+      if(err){
+        console.log(err);
+        return self.emit('json',{status: 0, message: err.errors});
+      }
+      if (todo){
+        console.log(_todo);
+        return self.emit('json', {status: 1, message: 'done', todo: _todo});
+      }
+      return self.emit('json', {status: 0, message: 'unknown'});
+    });
+  },
+  put: function(){
+  },
+  delete: function(){
   }
 });
 

@@ -1,5 +1,5 @@
 mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/microweb');
+
 UserSchema = mongoose.Schema({
 	name: {
 		type: String,

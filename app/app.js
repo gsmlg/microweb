@@ -2,7 +2,10 @@
 var connect = require('connect'),
     config = require('./config'),
     path = require('path'),
-    app = module.exports = connect();
+    app = module.exports = connect(),
+    mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/microweb');
 
 app.use(connect.logger('dev'));
 
