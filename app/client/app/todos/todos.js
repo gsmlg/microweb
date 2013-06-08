@@ -25,34 +25,76 @@ jQuery(function($){
   }),
       TaskView = Backbone.View.extend({
         tagName:'div',
-        attributes: {'class':'span4 thumbnail'},
         template: function anonymous(locals) {
           var buf = [];
-          var locals_ = (locals || {}),title = locals_.title,detail = locals_.detail,processed = locals_.processed;buf.push("<h2>" + (title ? title : "") + "</h2><p>" + (detail ? detail : "") + "<div class=\"progress\"><div style=\"width:"+(processed ? processed : "")+"%\" class=\"bar\" ></div></div></p><p><a class=\"btn edit\"><i class=\"icon-wrench\"></i></a><a class=\"btn do\"><i class=\"icon-ok\"></i></a><a class=\"btn drop\"><i class=\"icon-remove\"></i></a></p>");;return buf.join("");
+          var locals_ = (locals || {}),title = locals_.title,detail = locals_.detail,processed = locals_.processed;buf.push("<h2>" + (title ? title : "") + "</h2><p>" + (detail ? detail : "") + "<div class=\"progress\"><div style=\"width:"+(processed ? processed : 0)+"%\" class=\"bar\" ></div></div></p><p><a class=\"btn edit\"><i class=\"icon-cog\"></i></a><a class=\"btn do\"><i class=\"icon-arrow-up\"></i></a><a class=\"btn drop pull-right\"><i class=\"icon-remove\"></i></a></p>");;return buf.join("");
+        },
+        templateBig: function(locals){
+          var buf = [];
+          var locals_ = (locals || {}),
+              title = locals_.title ? locals_.title : '',
+              detail = locals_.detail ? locals_.detail : '',
+              processd = locals_.processed ? locals_.processd : 0;
+          buf.push('<h1>正在做：<span class="lead">'+ title + '</span></h1>');
+          buf.push('<p>'+detail+'</p>');
+          buf.push('<div>当前进度：'+processd+'%');
+          buf.push('<div class="progress progress-striped active">');
+          buf.push('<div style="width:'+processd+'%" class="bar"></div>');
+          buf.push('</div>');
+          buf.push('</div>');
+          buf.push('<div class="control-group">');
+          buf.push('<div class="span2"><button class="btn done'+ ((processd < 100) ? ' disabled' : '') +'"><i class="icon-ok"></i>标记完成</button></div>');
+          buf.push('<div class="span1"><button class="btn plus'+ ((processd == 100) ? ' disabled' : '') +'"><i class="icon-plus"></i></button></div>');
+          buf.push('<div class="span1"><button class="btn minus'+ ((processd == 0) ? ' disabled' : '') +'"><i class="icon-minus"></i></button></div>');
+          buf.push('<div class="span2"><button class="btn edit"><i class="icon-cog"></i>调整内容</button></div>');
+          buf.push('<div class="span1 pull-right"><button class="btn pending"><i class="icon-arrow-down"></i></button></div>');
+          buf.push('</div>');
+          return buf.join('');
         },
         render: function(){
-          this.$el.html(this.template(this.model.attributes));
+          switch(this.model.get('state')){
+            case 'pending':
+            this.$el.attr('class','span4 thumbnail');
+            this.$el.html(this.template(this.model.attributes));
+            break;
+            case 'doing':
+            this.$el.attr('class','hero-unit');
+            this.$el.html(this.templateBig(this.model.attributes));
+            break;
+          }
           return this;
         },
         initialize: function(opt){
           this.model = opt.model;
           this.listenTo(this.model,'change',this.render);
-          this.listenTo(this.model, 'remove', this.remove);
+          this.listenTo(this.model, 'destroy', this.remove);
         },
         events: {
-          'click .plus': 'plus',
-          'click .minus': 'minus',
-          'click .done': 'done',
-          'click .drop': 'drop'
+          'click .edit': 'edit',
+          'click .do': 'do',
+          'click .drop': 'drop',
+          'click [class="btn plus"]': 'plus',
+          'click [class="btn minus"]': 'minux'
         },
         drop: function(){
-          this.model.destroy();
+          console.log(this.model);
+          this.model.destroy({wait: true});
         },
-        done: function(){
+        do: function(){
+          this.model.save({state:'doing'}, {wait:true});
         },
         plus: function(){
+          var processd = this.model.get('processd') + 5;
+           processd = processd < 100 ? processd : 100;
+          this.model.save({processd: processd}, {wait:true});
         },
         minus: function(){
+          var processd = this.model.get('processd') - 5;
+           processd = processd > 0 ? processd : 0;
+          this.model.save({processd: processd}, {wait:true});
+        },
+        edit: function(){
+          taskSetting.setModel(this.model);
         }
       }),
       DashboardView = Backbone.View.extend({
@@ -84,7 +126,14 @@ jQuery(function($){
           this.$el.modal('hide');
         },
         setModel: function(model){
-          this.model.set(model);
+          this.model.clear();
+          this.model.set(model.attributes);
+          this.$el.modal('show');
+        },
+        render: function(){
+          var attr = this.model.attributes;
+          this.$el.find('[name="title"]').val(attr.title);
+          this.$el.find('[name="detail"]').val(attr.detail);
         },
         serialize: function(){
           var attrs = {};
@@ -124,9 +173,11 @@ jQuery(function($){
           this.listenTo(this.collection, 'remove', this.removeOne);
           this.render();
         },
-        tagName: 'div',
-        attributes: {'class':'row-fluid'},
+        el: $('#todo-list')[0],
         addOne: function(model){
+          if (model.get('state') === 'pending') {
+            
+          }
           var el = (new TaskView({model:model})).render().el;
           this.$el.append(el);
         },
@@ -143,7 +194,7 @@ jQuery(function($){
       });
   window.todos = new Tasks;
   window.app = new TodoApp({collection: todos});
-  $('.span9').append(app.el);
+
   todos.fetch();
   window.taskSetting = new TaskSettingView({collection: todos});
   window.dashboard = new DashboardView({taskView: taskSetting, app: app});

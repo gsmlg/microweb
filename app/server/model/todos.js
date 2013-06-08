@@ -30,8 +30,16 @@ var todoSchema = Schema({
     validate:[function(value){
       return !isNaN(value) && value >= 0 && value <= 100;
     }, '完成进度在0-100之间']
+  },
+  state: {
+    type: String,
+    default: 'pending',
+    validate: [function(value){
+      return !!['pending','done','trash','doing'].filter(function(v){
+        return value === v;
+      }).length;
+    }, 'state only "pending","done","doing","trash"']
   }
-
 });
 
 module.exports = mongoose.model('todos',todoSchema, 'todos');

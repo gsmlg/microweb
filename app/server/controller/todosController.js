@@ -35,7 +35,7 @@ var todosController = Controller.extend({
     var todos = [{title:'Controller',processed:'35'},{title:'Model',processed:'80'},{title:'View',processed:'73'}];
     var todo = new Todos();
     var self = this;
-    Todos.find(function(err,list){
+    Todos.find({$or:[{state:'pending'}, {state:'doing'}]}, function(err,list){
       if(err)
         return self.emit('json',{status: 0, message: err.errors});
       if (todo)
@@ -51,7 +51,7 @@ var todosController = Controller.extend({
         console.log(err);
         return self.emit('json',{status: 0, message: err.errors});
       }
-      if (todo){
+      if (_todo){
         console.log(_todo);
         return self.emit('json', {status: 1, message: 'done', todo: _todo});
       }
@@ -59,8 +59,38 @@ var todosController = Controller.extend({
     });
   },
   put: function(){
+    var todo = this.req.body,
+        id = todo['_id'],
+        self = this;
+    delete todo['_id'];
+    Todos.findByIdAndUpdate(id, todo, {upsert: false}, function(err, _todo){
+      if(err){
+        console.log(err);
+        return self.emit('json',{status: 0, message: err.errors});
+      }
+      if (_todo){
+        console.log(_todo);
+        return self.emit('json', {status: 1, message: 'done', todo: _todo});
+      }
+      return self.emit('json', {status: 0, message: 'unknown'});
+    });
   },
   delete: function(){
+    var todo = this.req.body,
+        id = todo['_id'],
+        self = this;
+    delete todo['_id'];
+    Todos.findByIdAndUpdate(id, todo, {upsert: false}, function(err, _todo){
+      if(err){
+        console.log(err);
+        return self.emit('json',{status: 0, message: err.errors});
+      }
+      if (_todo){
+        console.log(_todo);
+        return self.emit('json', {status: 1, message: 'done'});
+      }
+      return self.emit('json', {status: 0, message: 'unknown'});
+    });
   }
 });
 
