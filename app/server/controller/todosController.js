@@ -76,17 +76,13 @@ var todosController = Controller.extend({
     });
   },
   delete: function(){
-    var todo = this.req.body,
-        id = todo['_id'],
+    var id = this.req.url.match(/^\/todos\/api\/(\w{24})/)[1],
         self = this;
-    delete todo['_id'];
-    Todos.findByIdAndUpdate(id, todo, {upsert: false}, function(err, _todo){
+    Todos.findByIdAndUpdate(id, {$set:{state:'trash'}}, {upsert: false}, function(err, _todo){
       if(err){
-        console.log(err);
         return self.emit('json',{status: 0, message: err.errors});
       }
       if (_todo){
-        console.log(_todo);
         return self.emit('json', {status: 1, message: 'done'});
       }
       return self.emit('json', {status: 0, message: 'unknown'});

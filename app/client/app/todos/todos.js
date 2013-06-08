@@ -7,7 +7,7 @@
 jQuery(function($){
   var Task = Backbone.Model.extend({
     idAttribute: '_id',
-    url: '/todos/api',
+    urlRoot: '/todos/api',
     defaults: {
       processed: 0
     },
@@ -34,18 +34,18 @@ jQuery(function($){
           var locals_ = (locals || {}),
               title = locals_.title ? locals_.title : '',
               detail = locals_.detail ? locals_.detail : '',
-              processd = locals_.processed ? locals_.processd : 0;
+              processed = locals_.processed ? locals_.processed : 0;
           buf.push('<h1>正在做：<span class="lead">'+ title + '</span></h1>');
           buf.push('<p>'+detail+'</p>');
-          buf.push('<div>当前进度：'+processd+'%');
+          buf.push('<div>当前进度：'+processed+'%');
           buf.push('<div class="progress progress-striped active">');
-          buf.push('<div style="width:'+processd+'%" class="bar"></div>');
+          buf.push('<div style="width:'+processed+'%" class="bar"></div>');
           buf.push('</div>');
           buf.push('</div>');
           buf.push('<div class="control-group">');
-          buf.push('<div class="span2"><button class="btn done'+ ((processd < 100) ? ' disabled' : '') +'"><i class="icon-ok"></i>标记完成</button></div>');
-          buf.push('<div class="span1"><button class="btn plus'+ ((processd == 100) ? ' disabled' : '') +'"><i class="icon-plus"></i></button></div>');
-          buf.push('<div class="span1"><button class="btn minus'+ ((processd == 0) ? ' disabled' : '') +'"><i class="icon-minus"></i></button></div>');
+          buf.push('<div class="span2"><button class="btn done'+ ((processed < 100) ? ' disabled' : '') +'"><i class="icon-ok"></i>标记完成</button></div>');
+          buf.push('<div class="span1"><button class="btn plus'+ ((processed == 100) ? ' disabled' : '') +'"><i class="icon-plus"></i></button></div>');
+          buf.push('<div class="span1"><button class="btn minus'+ ((processed == 0) ? ' disabled' : '') +'"><i class="icon-minus"></i></button></div>');
           buf.push('<div class="span2"><button class="btn edit"><i class="icon-cog"></i>调整内容</button></div>');
           buf.push('<div class="span1 pull-right"><button class="btn pending"><i class="icon-arrow-down"></i></button></div>');
           buf.push('</div>');
@@ -73,28 +73,35 @@ jQuery(function($){
           'click .edit': 'edit',
           'click .do': 'do',
           'click .drop': 'drop',
-          'click [class="btn plus"]': 'plus',
-          'click [class="btn minus"]': 'minux'
+          'click .plus:not(.disabled)': 'plus',
+          'click .minus:not(.disabled)': 'minus',
+          'click .done:not(.disabled)': 'done'
         },
         drop: function(){
           console.log(this.model);
+          console.log(this.model.isNew());
           this.model.destroy({wait: true});
         },
         do: function(){
           this.model.save({state:'doing'}, {wait:true});
         },
         plus: function(){
-          var processd = this.model.get('processd') + 5;
-           processd = processd < 100 ? processd : 100;
-          this.model.save({processd: processd}, {wait:true});
+          var processed = this.model.get('processed') + 5;
+           processed = processed < 100 ? processed : 100;
+          this.model.save({processed: processed}, {wait:true});
         },
         minus: function(){
-          var processd = this.model.get('processd') - 5;
-           processd = processd > 0 ? processd : 0;
-          this.model.save({processd: processd}, {wait:true});
+          var processed = this.model.get('processed') - 5;
+           processed = processed > 0 ? processed : 0;
+          this.model.save({processed: processed}, {wait:true});
         },
         edit: function(){
           taskSetting.setModel(this.model);
+        },
+        done: function(){
+          if(this.model.get('processed') == 100){
+            this.model.save({state:'done'},{wait:true});
+          }
         }
       }),
       DashboardView = Backbone.View.extend({
