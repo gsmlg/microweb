@@ -27,8 +27,9 @@ html.no-js
         link(rel='stylesheet', href='/vendor/h5bp/css/main.css')
         link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     script(src='/vendor/h5bp/js/modernizr-2.6.2.min.js')
+    - var user = user || 'null';
     script.
-        window.USER = #{user}
+        window.USER = #{user};
   body
     //if lt IE 7
       p.chromeframe
