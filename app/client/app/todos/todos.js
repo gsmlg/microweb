@@ -257,7 +257,7 @@ jQuery(function($){
                 })[0];
                 if (model.get('state')==='doing'){
                     view.$el.prependTo('#todo-list');
-                    this.doing.save({state:'pending'}, {wait:true});
+                    // this.doing.save({state:'pending'}, {wait:true});
                     this.doing = view.model;
                 } else if (model.get('state')==='pending'){
                     this.subels.add(view);
