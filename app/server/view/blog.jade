@@ -1,0 +1,64 @@
+extends layout
+
+block append jsFiles
+    script(src='/app/user/login.js')
+
+block append contents
+
+    include component/headbar
+
+    #onDoing.container-fluid
+        .row-fluid
+            #todo-list.span9
+                .hero-unit
+                    h1 MVC框架，micro web
+                    p
+                        | Mirco web 是基于mvc的node.js框架。
+                        | 主要是通过框架server/controller目录下的index.js来对控制器进行路由，
+                        | 调取对应的控制器，并通过事件机制来完成一次访问。
+                        | 框架启动后会解析视图模板，并进行缓存，默认使用jade模板引擎，可以更换，对控制器调用透明。
+
+                    .control-group
+
+                        .span2.pull-right
+                            button.btn
+                                .icon-remove
+                                | 删除
+                        .span2
+                            button.btn
+                                .icon-wrench
+                                | 修改
+            .span3
+                #dashboard.well
+
+                    .row-fluid.control-group
+                        .span6.text-center
+                            a#add.btn
+                                i.icon-plus
+                                | 添加
+                        .span6.text-center
+                            button.btn#trash
+                                i.icon-trash
+                                | 回收
+
+                #taskModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                        h3#myModalLabel.text-center 日&#12288;志
+                    form.modal-body.form-horizontal(action='/user/login',method='post')
+                        .control-group
+                            label.control-label(for='inputEmail') 标题：
+                            .controls
+                                input(name='title',type='text',placeholder='任务名称',title='')
+                        .control-group
+                            label.control-label(for='inputPassword') 内容：
+                            .controls
+                                textarea(name='detail',rows=3,placeholder='填写任务详情',title='')
+                        .control-group
+                            .controls
+                                label.checkbox
+                        .control-group.message
+                    .modal-footer
+                        button.btn(data-dismiss='modal', aria-hidden='true') 取消
+                        button.btn.btn-primary 增加
+

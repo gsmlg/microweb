@@ -9,55 +9,55 @@ block contents
       .row-fluid
         .span9
           .hero-unit
-            h1 Hello, world!
+            h1 Micro Web!
             p
-              | This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+              | Micro Web 是一个node.js微型框架，使用了connect中间件，和jade模板引擎。
             p
               a.btn.btn-primary.btn-large(href='#') Learn more »
           .row-fluid
             .span4
-              h2 Heading
+              h2 控制器
               p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-              p
-                a.btn(href='#') View details »
-            // /span
-            .span4
-              h2 Heading
-              p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                | 编写控制器，只要引入并继承Controller。写入uri即可为控制器指定路由。可以通过事件回调机制，完成模型数据的读取之后，并交给视图渲染。
               p
                 a.btn(href='#') View details »
             // /span
             .span4
-              h2 Heading
+              h2 模型
               p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                | 模型直接使用mogoose来未完成ORM。
+              p
+                a.btn(href='#') View details »
+            // /span
+            .span4
+              h2 视图
+              p
+                | 视图会在服务启动后预渲染所有视图。当想要调用时，使用view.use('视图路径')直接调用视图。
               p
                 a.btn(href='#') View details »
             // /span
           // /row
           .row-fluid
             .span4
-              h2 Heading
+              h2 路由系统
               p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                | 通过controller目录下的index.js来确定访问路径。
               p
-                a.btn(href='#') View details »
+                a.btn(href='#') View details ?
             // /span
             .span4
-              h2 Heading
+              h2 配置
               p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                | 配置放在app目录下的config子目录，可以根据需要方便的修改
               p
-                a.btn(href='#') View details »
+                a.btn(href='#') View details ?
             // /span
             .span4
-              h2 Heading
+              h2 一些核心的方法
               p
-                | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                | lib目录下，Class.js为父类，提供一些基本的原型继承的功能。Controller.js，来作为控制器的父类，提供了事件驱动的控制器调度。
               p
-                a.btn(href='#') View details »
+                a.btn(href='#') View details ?
             // /span
           // /row
         // /span
