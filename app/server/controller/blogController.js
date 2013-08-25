@@ -13,7 +13,7 @@ var blogController = Controller.extend({
     start: function(){
         user = this.req.session.user;
         if (/^\/blog\/?$/.test(this.req.url))
-            this.emit('render',view.use('blog'), {title: 'TODOS',user: user, activeBar: 'todos'});
+            this.emit('render',view.use('blog'), {title: 'blog',user: user, activeBar: 'blog'});
 
     },
     auth: function(){

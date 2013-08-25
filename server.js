@@ -1,5 +1,5 @@
 
-var app = require('./app/app');
+var server = require('./app/app');
 var port = 3000;
-app.listen(port);
+server.listen(port);
 console.log('Server start at Port: ' + port);

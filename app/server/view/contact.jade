@@ -1,0 +1,34 @@
+extends layout
+
+block append jsFiles
+    script(src='/app/user/login.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/app/contact/contact.js')
+
+block append contents
+
+    include component/headbar
+    .container-fluid
+        .row-fluid
+            #ChatBox.span9
+                .hero-unit
+                    form
+                        input#msg(type='text',placeholder='输入聊天信息！')
+                        input#send(type='submit',value='发送')
+                table#chatroom.span12
+                    tr#chat-title
+                        td.span3 名字
+                        td.span6 消息
+                        td.span3 时间
+
+            #infoBox.span3
+                #userBox.well
+                    .row-fluid.control-group
+                        | your name：
+                        | #{username}
+
+                #listBox.well
+
+
+
+

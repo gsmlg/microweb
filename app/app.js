@@ -2,7 +2,8 @@
 var connect = require('connect'),
     config = require('./config'),
     path = require('path'),
-    app = module.exports = connect(),
+    app = connect(),
+    server = module.exports = require('http').createServer(app);
     mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/microweb');
@@ -56,3 +57,5 @@ app.use(function(req, res, next) {
           Object.getOwnPropertyNames(res) + '\n' +
          req.url + ' ' + req.method);
 });
+
+require('./io');
