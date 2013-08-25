@@ -42,11 +42,23 @@ io.sockets.on('connection', function(socket){
     // socket.join('room');
  
     socket.on('newMsg', function (data){
+        var d = new Date;
+        var now = d.getFullYear() + '-' +
+                    (d.getMonth() + 1) + '-' + 
+                    d.getDate() + ' ' + 
+                    d.getHours() + ':' +
+                    d.getMinutes() + ':' + 
+                    d.getSeconds();
         socket.broadcast.emit('message', {
             user: hs.session.user.name,
             message: data.message,
-            time: new Date().toString()
-        })
+            time: now
+        });
+        socket.emit('message', {
+            user: hs.session.user.name,
+            message: data.message,
+            time: now
+        });
     });
 });
 
