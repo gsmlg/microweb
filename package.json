@@ -6,12 +6,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "connect": "~2.7.10",
-    "connect-mongo": "~0.3.2",
-    "jade": "git://github.com/visionmedia/jade",
-    "mongoose": "~3.6.11"
+    "express": "~4.4.3",
+    "socket.io": "~1.0.4",
+    "mincer": "~1.0.4"
   },
-  "devDependencies": {
-    "grunt": "~0.4.1"
-  }
+  "devDependencies": {}
 }
