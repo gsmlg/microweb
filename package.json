@@ -1,14 +1,14 @@
 {
-  "name": "microsite",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "~4.4.3",
-    "socket.io": "~1.0.4",
-    "mincer": "~1.0.4"
-  },
-  "devDependencies": {}
+    "name": "MicroWeb",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "start": "node config/bootstrap"
+    },
+    "dependencies": {
+        "express": "~4.4.3",
+        "socket.io": "~1.0.4",
+        "mincer": "~1.0.4"
+    },
+    "devDependencies": {}
 }
