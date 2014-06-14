@@ -1,20 +1,13 @@
-var Application = {},
-    express = require('express'),
+var express = require('express'),
     fs = require('fs'),
     path = require('path'),
     app = express(),
     server = require('http').createServer(app);
 
-Application.app = app;
-
 app.get('/', function(req, res, next){
     res.status = 200;
     res.end("Hello there!\n");
 });
-
-Application.server = server;
-
-module.exports = Application;
 
 var port = process.env.PORT || 3000;
 server.listen(port, function(){
@@ -22,3 +15,6 @@ server.listen(port, function(){
 //    var pidFile = fs.open(path.join(__filename, '..', 'tmp', 'server.pid'));
 
 });
+
+exports.app = app;
+exports.server = server;
